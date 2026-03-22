@@ -18,7 +18,27 @@ const NAV_CONFIG = {
     },
 };
 
+/* ── Theme helpers ── */
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    const icon = document.getElementById('theme-icon');
+    if (icon) {
+        icon.className = theme === 'light' ? 'ri-sun-line' : 'ri-moon-line';
+    }
+}
+
+function initTheme() {
+    const saved = localStorage.getItem('theme') || 'dark';
+    applyTheme(saved);
+    document.getElementById('btn-theme-toggle')?.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+}
+
 export function setupLayout() {
+    initTheme();
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     // ── Sidebar: datos del usuario ──
@@ -29,6 +49,15 @@ export function setupLayout() {
     if (nameEl)   nameEl.textContent   = user.nombre || 'Usuario';
     if (roleEl)   roleEl.textContent   = user.rol    || '';
     if (avatarEl) avatarEl.textContent = (user.nombre || 'U')[0].toUpperCase();
+
+    // ── Top-nav: pill de usuario ──
+    const navNameEl   = document.getElementById('nav-user-name');
+    const navRoleEl   = document.getElementById('nav-user-role');
+    const navAvatarEl = document.getElementById('nav-user-avatar');
+
+    if (navNameEl)   navNameEl.textContent   = user.nombre || 'Usuario';
+    if (navRoleEl)   navRoleEl.textContent   = user.rol    || '';
+    if (navAvatarEl) navAvatarEl.textContent = (user.nombre || 'U')[0].toUpperCase();
 
     // ── Filtrar y personalizar nav según rol ──
     applyNavByRole(user.rol);
@@ -75,8 +104,8 @@ export function setupLayout() {
         });
     });
 
-    // ── Low stock badge (solo Admin) ──
-    if (user.rol === 'Admin') checkLowStock();
+    // ── Sistema de alertas por rol ──
+    setupNotifications(user);
 
     return user;
 }
@@ -155,9 +184,90 @@ function showLogoutConfirm() {
     });
 }
 
+/* ════════════════════════════════════════
+   SISTEMA DE NOTIFICACIONES POR ROL
+   ════════════════════════════════════════ */
+function setupNotifications(user) {
+    const notifBtn = document.getElementById('btn-notifications');
+    const badge    = document.getElementById('nav-notif-count');
+
+    let count = 0;
+
+    function increment() {
+        count++;
+        if (badge) {
+            badge.textContent   = count;
+            badge.style.display = 'inline-flex';
+        }
+        if (notifBtn) {
+            // Reiniciar animación para que se repita en cada alerta nueva
+            notifBtn.classList.remove('nav-notif-ring');
+            void notifBtn.offsetWidth;
+            notifBtn.classList.add('nav-notif-ring');
+        }
+    }
+
+    function reset() {
+        count = 0;
+        if (badge) badge.style.display = 'none';
+        notifBtn?.classList.remove('nav-notif-ring');
+    }
+
+    if (user.rol === 'Admin') {
+        // Admin → alertas de inventario bajo, navega a Inventario
+        notifBtn?.addEventListener('click', () => {
+            document.querySelector('.nav-item[data-view="inventory"]')?.click();
+            reset();
+        });
+        checkLowStock();
+
+    } else if (user.rol === 'Chef' || user.rol === 'Mesero') {
+        // Chef y Mesero → alertas en tiempo real via Socket.IO
+        notifBtn?.addEventListener('click', () => {
+            document.querySelector('.nav-item[data-view="orders"]')?.click();
+            reset();
+        });
+
+        // Registrar listeners cuando el socket esté listo
+        function attachSocketListeners() {
+            const socket = window._socket;
+            if (!socket) return;
+
+            if (user.rol === 'Chef') {
+                // Nuevo pedido creado por un Mesero
+                socket.on('new-order', (order) => {
+                    increment();
+                    // Actualizar tooltip con contexto
+                    if (notifBtn) notifBtn.title = `${count} pedido(s) nuevo(s) — Mesa ${order?.mesa ?? ''}`.trim();
+                });
+            } else if (user.rol === 'Mesero') {
+                // Chef marcó un pedido como Listo
+                socket.on('order-updated', (order) => {
+                    if (order?.estado === 'Listo') {
+                        increment();
+                        if (notifBtn) notifBtn.title = `${count} pedido(s) listo(s) para entregar`;
+                    }
+                });
+            }
+        }
+
+        // El socket se crea en el inline script antes del módulo;
+        // si ya existe lo usamos, si no esperamos al evento load.
+        if (window._socket) {
+            attachSocketListeners();
+        } else {
+            window.addEventListener('load', attachSocketListeners, { once: true });
+        }
+
+    } else {
+        // Rol desconocido → ocultar campana
+        if (notifBtn) notifBtn.style.display = 'none';
+    }
+}
+
 async function checkLowStock() {
-    const badge = document.getElementById('nav-badge-inventory');
-    if (!badge) return;
+    const badge    = document.getElementById('nav-badge-inventory');
+    const topBadge = document.getElementById('nav-notif-count');
     try {
         const res = await fetch('/api/inventory', {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -166,8 +276,17 @@ async function checkLowStock() {
         const items    = await res.json();
         const lowCount = items.filter(i => i.stock <= i.minStock).length;
         if (lowCount > 0) {
-            badge.textContent   = lowCount;
-            badge.style.display = 'inline-flex';
+            if (badge) {
+                badge.textContent   = lowCount;
+                badge.style.display = 'inline-flex';
+            }
+            if (topBadge) {
+                topBadge.textContent   = lowCount;
+                topBadge.style.display = 'inline-flex';
+            }
+            // Animar la campana para llamar la atención
+            const bellBtn = document.getElementById('btn-notifications');
+            bellBtn?.classList.add('nav-notif-ring');
         }
     } catch { /* silencioso */ }
 }
@@ -176,8 +295,19 @@ export function setActiveNav(viewId, title) {
     document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.view === viewId);
     });
+
     const titleEl = document.getElementById('view-title');
     if (titleEl && title) titleEl.textContent = title;
+
+    // Sincronizar ícono del breadcrumb con el nav item activo
+    const activeBtn   = document.querySelector(`.nav-item[data-view="${viewId}"]`);
+    const navIconEl   = document.getElementById('nav-view-icon');
+    if (navIconEl && activeBtn) {
+        const btnIcon = activeBtn.querySelector('i');
+        if (btnIcon) {
+            navIconEl.className = `nav-view-icon ${btnIcon.className}`;
+        }
+    }
 }
 
 export function showComingSoon(container, label = 'Esta sección') {

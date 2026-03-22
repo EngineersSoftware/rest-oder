@@ -25,8 +25,8 @@ function setLoading(loading) {
   if (!btnSubmit) return;
   btnSubmit.disabled = loading;
   btnSubmit.innerHTML = loading
-    ? '<i class="ri-loader-4-line"></i> Verificando…'
-    : '<i class="ri-login-box-line"></i> Iniciar Sesión';
+    ? '<i class="ri-loader-4-line spin"></i> Verificando…'
+    : '<span>Acceder al sistema</span><i class="ri-arrow-right-line"></i>';
 }
 
 form?.addEventListener("submit", async (e) => {
