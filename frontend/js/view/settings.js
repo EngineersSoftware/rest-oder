@@ -1,6 +1,3 @@
-/* =====================================================
-   settings.js — Configuración del sistema
-   ===================================================== */
 import { fetchWithAuth } from '../utils/storage.js';
 
 const VERSION = '1.0.0';
@@ -187,7 +184,6 @@ export async function renderSettingsView(user, container) {
     setupSettingsHandlers(user);
 }
 
-/* ── Handlers ── */
 function setupSettingsHandlers(user) {
     // Toggle mostrar/ocultar contraseña
     document.querySelectorAll('.btn-toggle-password').forEach(btn => {
@@ -294,7 +290,6 @@ function setupSettingsHandlers(user) {
     });
 }
 
-/* ── Helpers ── */
 function showMsg(el, msg, type) {
     if (!el) return;
     el.textContent      = msg;

@@ -1,6 +1,3 @@
-/* =====================================================
-   router.js — Enrutamiento por rol del dashboard
-   ===================================================== */
 import { setupLayout, setActiveNav, showComingSoon } from './layout.js';
 
 const PAGE_TITLES = {
@@ -26,7 +23,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupSidebarNav(user, mainView);
 });
 
-/* ── Vista por defecto según rol ── */
 async function loadDefaultView(user, container) {
     switch (user.rol) {
         case 'Admin':
@@ -53,7 +49,6 @@ async function loadDefaultView(user, container) {
     }
 }
 
-/* ── Navegación del sidebar ── */
 function setupSidebarNav(user, mainView) {
     document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
         btn.addEventListener('click', async () => {
@@ -104,12 +99,10 @@ async function loadView(viewId, user, mainView) {
     }
 }
 
-/* ── Título dinámico de pestaña ── */
 export function setDocTitle(viewTitle) {
     document.title = viewTitle ? `${viewTitle} | GourmetExpress` : 'GourmetExpress';
 }
 
-/* ── Loaders (dynamic import) ── */
 async function loadDashboardAdminView(user, container) {
     const { renderDashboardAdmin } = await import('./view/dashboardAdmin.js');
     await renderDashboardAdmin(user, container);

@@ -1,6 +1,4 @@
-/* =====================================================
-   mesero.js — Vista del Mesero: Tomar Pedido + Mis Pedidos
-   ===================================================== */
+
 import { getMenu } from '../api/menu.js';
 import { getOrders, createOrder, updateOrder } from '../api/order.js';
 import { getCart, setCart, clearCart } from '../utils/storage.js';
@@ -11,9 +9,6 @@ const ORDER_STEPS = ['Pendiente', 'Preparando', 'Listo', 'Entregado'];
 let _meseroOrdersPage = 1;
 const ORDERS_PAGE_SIZE = 10;
 
-/* =====================================================
-   VISTA PRINCIPAL: Menú + Carrito
-   ===================================================== */
 export async function renderMeseroView(user, container) {
     const view = container || document.getElementById('main-view');
     if (!view) return;
@@ -102,7 +97,7 @@ export async function renderMeseroView(user, container) {
     setupCartHandlers();
 }
 
-/* ── Cargar menú desde API ── */
+
 async function loadMenu() {
     const grid    = document.getElementById('menu-grid');
     const filters = document.getElementById('menu-filters');
@@ -280,7 +275,7 @@ function renderCart() {
   `).join('');
 }
 
-/* ── Enviar pedido ── */
+
 async function sendOrder() {
     const cart = getCart();
     if (cart.length === 0) return;
@@ -307,9 +302,7 @@ async function sendOrder() {
     }
 }
 
-/* =====================================================
-   VISTA SECUNDARIA: Mis Pedidos
-   ===================================================== */
+
 export async function renderMeseroOrdersView(user, container) {
     const view = container || document.getElementById('main-view');
     if (!view) return;

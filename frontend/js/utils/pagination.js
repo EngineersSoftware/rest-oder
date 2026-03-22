@@ -1,18 +1,3 @@
-/* =====================================================
-   pagination.js — Utilidad de paginación reutilizable
-   ===================================================== */
-
-/**
- * Paginate an array and render controls.
- *
- * @param {Object} opts
- * @param {any[]}      opts.items        - Full dataset
- * @param {number}     opts.page         - Current page (1-based)
- * @param {number}     opts.pageSize     - Items per page
- * @param {Function}   opts.renderPage   - fn(pageItems, from, to, total) → renders rows
- * @param {string}     opts.containerId  - ID of element where controls are injected
- * @param {Function}   opts.onPageChange - fn(newPage) called when user clicks a page
- */
 export function paginate({ items, page, pageSize, renderPage, containerId, onPageChange }) {
     const total     = items.length;
     const totalPages = Math.max(1, Math.ceil(total / pageSize));

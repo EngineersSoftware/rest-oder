@@ -1,8 +1,4 @@
-/* =====================================================
-   CARDS
-   ===================================================== */
 
-/* ── Card genérica ── */
 .card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -10,7 +6,7 @@
   padding: var(--s6);
 }
 
-/* ── Login Card ── */
+
 .login-card {
   width: 100%;
   max-width: 420px;

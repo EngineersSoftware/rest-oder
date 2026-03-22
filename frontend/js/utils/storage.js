@@ -1,7 +1,3 @@
-/* =====================================================
-   storage.js — localStorage helpers + fetchWithAuth
-   ===================================================== */
-
 const API_URL = '/api';
 
 const KEYS = {
@@ -28,7 +24,6 @@ export const clearAuth = () => {
   localStorage.removeItem(KEYS.USER);
 };
 
-/* ── Carrito (Mesero) ── */
 export const getCart = () => {
   const raw = localStorage.getItem(KEYS.CART);
   return raw ? JSON.parse(raw) : [];
@@ -42,7 +37,6 @@ export const clearCart = () => {
   localStorage.removeItem(KEYS.CART);
 };
 
-/* ── HTTP helper autenticado ── */
 export const fetchWithAuth = async (endpoint, options = {}) => {
   const token = getToken();
 

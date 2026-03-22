@@ -16,10 +16,8 @@ const __dirname  = path.dirname(__filename);
 
 const app = express();
 
-// Servir frontend como archivos estáticos
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Middlewares
 app.use(express.json());
 app.use(cors({
     origin: process.env.FRONTEND_URL || '*',
@@ -29,7 +27,6 @@ app.use(cors({
 app.use(morgan('dev'));
 app.use(requestLogger);
 
-// Rutas API
 app.use('/api/auth', authRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/inventory', inventoryRoutes);
@@ -37,7 +34,6 @@ app.use('/api/order', orderRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/users', userRoutes);
 
-// Manejo Global de Errores
 app.use((err, req, res, next) => {
     res.status(err.status || 500).json({
         status: 'error',

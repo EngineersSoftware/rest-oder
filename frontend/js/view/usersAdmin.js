@@ -1,6 +1,3 @@
-/* =====================================================
-   usersAdmin.js — Gestión de Usuarios (Admin)
-   ===================================================== */
 import { fetchWithAuth } from '../utils/storage.js';
 
 const ROLES = ['Admin', 'Mesero', 'Chef'];
@@ -114,7 +111,6 @@ export async function renderUsersAdminView(user, container) {
     setupUserHandlers(user);
 }
 
-/* ── Cargar usuarios ── */
 async function loadUsers(currentUser) {
     const tbody = document.getElementById('users-tbody');
     if (!tbody) return;
@@ -171,7 +167,6 @@ async function loadUsers(currentUser) {
     }
 }
 
-/* ── Event handlers ── */
 function setupUserHandlers(currentUser) {
     document.getElementById('btn-add-user')?.addEventListener('click', () => openUserModal());
 
@@ -262,7 +257,6 @@ function setupUserHandlers(currentUser) {
     });
 }
 
-/* ── Modal helpers ── */
 function openUserModal(user = null) {
     const modal      = document.getElementById('modal-user');
     const title      = document.getElementById('modal-user-title');

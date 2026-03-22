@@ -1,6 +1,5 @@
 import MenuItem from '../models/menuItem.js';
 
-/* Menú público (solo disponibles) — usado por Mesero */
 export const getMenu = async (req, res, next) => {
     try {
         const menu = await MenuItem.find({ disponible: true })
@@ -12,7 +11,7 @@ export const getMenu = async (req, res, next) => {
     }
 };
 
-/* Todos los platos — usado por Admin */
+
 export const getAllDishes = async (req, res, next) => {
     try {
         const dishes = await MenuItem.find()
@@ -24,7 +23,7 @@ export const getAllDishes = async (req, res, next) => {
     }
 };
 
-/* Crear nuevo plato */
+
 export const createDish = async (req, res, next) => {
     try {
         const dish = await MenuItem.create(req.body);
@@ -34,7 +33,7 @@ export const createDish = async (req, res, next) => {
     }
 };
 
-/* Actualizar plato (disponibilidad, precio, etc.) */
+
 export const updateDish = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -50,7 +49,7 @@ export const updateDish = async (req, res, next) => {
     }
 };
 
-/* Eliminar plato */
+
 export const deleteDish = async (req, res, next) => {
     try {
         const { id } = req.params;

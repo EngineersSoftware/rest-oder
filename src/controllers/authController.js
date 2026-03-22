@@ -25,10 +25,6 @@ export const login = async (req, res, next) => {
     }
 };
 
-/**
- * Permite a cualquier usuario autenticado actualizar
- * su propio nombre y/o contraseña.
- */
 export const updateProfile = async (req, res, next) => {
     try {
         const { nombre, password } = req.body;

@@ -1,7 +1,3 @@
-/* =====================================================
-   toast.js — Notificaciones tipo toast
-   ===================================================== */
-
 const ICONS = {
     success: 'ri-check-circle-fill',
     error:   'ri-close-circle-fill',
@@ -31,15 +27,12 @@ export function toast(message, type = 'info', duration = 3500) {
 
     c.appendChild(el);
 
-    // Cerrar manual
     el.querySelector('.toast-close')?.addEventListener('click', () => dismiss(el));
 
-    // Animación de entrada
     requestAnimationFrame(() => {
         requestAnimationFrame(() => el.classList.add('toast-visible'));
     });
 
-    // Auto-dismiss
     setTimeout(() => dismiss(el), duration);
 }
 

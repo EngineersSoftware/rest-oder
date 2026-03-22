@@ -1,8 +1,3 @@
-/* =====================================================
-   SISTEMA DE BOTONES
-   ===================================================== */
-
-/* ── Base compartida ── */
 .btn-primary,
 .btn-secondary,
 .btn-danger,
@@ -31,7 +26,6 @@
   font-size: 1rem;
 }
 
-/* ── Primario ── */
 .btn-primary {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
@@ -47,7 +41,6 @@
 
 .btn-primary:active { transform: scale(0.97); }
 
-/* ── Secundario ── */
 .btn-secondary {
   background: rgba(255, 255, 255, 0.06);
   color: var(--text);
@@ -61,7 +54,6 @@
 
 .btn-secondary:active { transform: scale(0.97); }
 
-/* ── Peligro ── */
 .btn-danger {
   background: var(--danger-bg);
   color: var(--danger);
@@ -74,7 +66,6 @@
   box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
 }
 
-/* ── Ghost ── */
 .btn-ghost {
   background: transparent;
   color: var(--text-muted);
@@ -87,7 +78,6 @@
   color: var(--text);
 }
 
-/* ── Modificadores de tamaño ── */
 .btn-sm {
   padding: 7px 14px;
   font-size: var(--text-xs);
@@ -102,7 +92,6 @@
 
 .btn-full { width: 100%; }
 
-/* ── Botón solo icono ── */
 .btn-icon {
   display: inline-flex;
   align-items: center;
@@ -125,7 +114,6 @@
   border-color: var(--border-hover);
 }
 
-/* ── Estado deshabilitado ── */
 .btn-primary:disabled,
 .btn-secondary:disabled {
   opacity: 0.5;
@@ -134,7 +122,6 @@
   box-shadow: none !important;
 }
 
-/* ── Badges / etiquetas de estado ── */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -171,7 +158,6 @@
   border: 1px solid rgba(99, 102, 241, 0.25);
 }
 
-/* Dot indicador en badge */
 .badge::before {
   content: '';
   width: 5px;

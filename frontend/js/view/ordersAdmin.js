@@ -1,6 +1,3 @@
-/* =====================================================
-   ordersAdmin.js — Gestión de pedidos (Admin)
-   ===================================================== */
 import { getOrders, updateOrder } from '../api/order.js';
 import { downloadCSV } from '../utils/export.js';
 import { paginate } from '../utils/pagination.js';
@@ -116,7 +113,7 @@ export async function renderOrdersAdminView(user, container) {
     }
 }
 
-/* ── Cargar pedidos ── */
+
 async function loadAdminOrders(filtro = 'Todos') {
     const tbody = document.getElementById('admin-orders-body');
     if (!tbody) return;
@@ -237,7 +234,6 @@ function renderOrdersTable(filtro) {
     });
 }
 
-/* ── Handlers ── */
 function setupOrdersHandlers() {
     const tabs = document.getElementById('orders-filter-tabs');
     tabs?.addEventListener('click', (e) => {
@@ -298,7 +294,6 @@ function setupOrdersHandlers() {
     });
 }
 
-/* ── Helpers ── */
 function estadoBadge(estado) {
     const map = {
         'Pendiente':  'badge-warning',

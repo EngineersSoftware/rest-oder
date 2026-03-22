@@ -1,6 +1,3 @@
-/* =====================================================
-   DASHBOARD LAYOUT
-   ===================================================== */
 .dashboard-body {
   min-height: 100vh;
 }
@@ -10,7 +7,6 @@
   min-height: 100vh;
 }
 
-/* ── Sidebar ── */
 .sidebar {
   width: var(--sidebar-w);
   min-width: var(--sidebar-w);
@@ -41,7 +37,6 @@
 
 .sidebar-logo span { color: var(--primary-light); }
 
-/* Navegación */
 .sidebar-nav {
   flex: 1;
   padding: var(--s4) var(--s3);
@@ -98,7 +93,6 @@
 
 .nav-item.active i { color: var(--primary-light); }
 
-/* Label de texto dentro del nav-item */
 .nav-label {
   flex: 1;
   white-space: nowrap;
@@ -106,7 +100,6 @@
   text-overflow: ellipsis;
 }
 
-/* Footer del sidebar */
 .sidebar-footer {
   padding: var(--s4) var(--s3);
   border-top: 1px solid var(--glass-border);
@@ -157,7 +150,6 @@
   line-height: 1.3;
 }
 
-/* ── Content Area ── */
 .content-area {
   flex: 1;
   display: flex;
@@ -166,7 +158,6 @@
   overflow: hidden;
 }
 
-/* Top Nav */
 .top-nav {
   height: var(--nav-h);
   display: flex;
@@ -200,7 +191,7 @@
   color: var(--text-muted);
 }
 
-/* Main content scroll area */
+
 .main-content {
   flex: 1;
   padding: var(--s8);
@@ -210,7 +201,7 @@
   gap: var(--s6);
 }
 
-/* ── Banner de bienvenida ── */
+
 .welcome-banner {
   display: flex;
   align-items: flex-end;
@@ -266,7 +257,6 @@
   .welcome-sub  { display: none; }
 }
 
-/* ── Stats Row ── */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -321,7 +311,6 @@
   color: var(--text-subtle);
 }
 
-/* ── Table Section ── */
 .table-section {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -386,7 +375,6 @@ td {
 .td-muted  { color: var(--text-muted); }
 .td-mono   { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
 
-/* Estados de tabla vacía */
 .table-state {
   text-align: center;
   padding: var(--s12) var(--s8);
@@ -401,7 +389,6 @@ td {
   color: var(--text-subtle);
 }
 
-/* ── Vista vacía genérica ── */
 .view-empty {
   display: flex;
   flex-direction: column;
@@ -418,11 +405,6 @@ td {
   color: var(--text-subtle);
 }
 
-/* ═══════════════════════════════════════════
-   VISTA MESERO: Menú + Carrito
-═══════════════════════════════════════════ */
-
-/* Layout dos columnas */
 .mesero-layout {
   display: grid;
   grid-template-columns: 1fr 300px;
@@ -430,7 +412,6 @@ td {
   align-items: start;
 }
 
-/* Filtros de categoría */
 .menu-filters {
   display: flex;
   gap: var(--s2);
@@ -677,9 +658,6 @@ td {
   border-top: 1px solid var(--glass-border);
 }
 
-/* ═══════════════════════════════════════════
-   VISTA CHEF: Pedidos activos
-═══════════════════════════════════════════ */
 
 .orders-group {
   display: flex;

@@ -1,8 +1,3 @@
-/* =====================================================
-   main.js — Login
-   ===================================================== */
-
-/* Toggle mostrar/ocultar contraseña */
 document.getElementById('toggle-password')?.addEventListener('click', function () {
   const input = document.getElementById('password');
   const icon  = this.querySelector('i');

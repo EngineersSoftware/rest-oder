@@ -1,10 +1,3 @@
-/**
- * export.js — Utilidad para descargar datos como CSV
- *
- * Usa ';' como separador (estándar para Excel en español/Latin América).
- * Incluye BOM UTF-8 para que Excel abra correctamente los acentos.
- */
-
 export function downloadCSV(data, headers, labels, filename = 'export.csv') {
     const SEP = ';';
 

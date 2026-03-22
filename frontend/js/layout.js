@@ -1,8 +1,3 @@
-/* =====================================================
-   layout.js — Setup común del dashboard
-   ===================================================== */
-
-/* Etiquetas e iconos personalizados por rol */
 const NAV_CONFIG = {
     Admin: {
         dashboard: { label: 'Inicio',              icon: 'ri-home-4-line' },
@@ -86,7 +81,6 @@ export function setupLayout() {
     return user;
 }
 
-/* ── Personalizar sidebar según rol ── */
 function applyNavByRole(rol) {
     const config = NAV_CONFIG[rol] || {};
 
@@ -122,7 +116,6 @@ function hideSectionTitleIfEmpty(sectionId, views) {
     titleEl.style.display = anyVisible ? '' : 'none';
 }
 
-/* ── Confirmación de logout ── */
 function showLogoutConfirm() {
     const existing = document.getElementById('logout-confirm-dialog');
     if (existing) return;
@@ -162,7 +155,6 @@ function showLogoutConfirm() {
     });
 }
 
-/* ── Low stock badge ── */
 async function checkLowStock() {
     const badge = document.getElementById('nav-badge-inventory');
     if (!badge) return;
@@ -180,7 +172,6 @@ async function checkLowStock() {
     } catch { /* silencioso */ }
 }
 
-/* ── Helpers exportados ── */
 export function setActiveNav(viewId, title) {
     document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.view === viewId);

@@ -5,10 +5,8 @@ import { checkRole } from '../middlewares/roleMiddleware.js';
 
 const router = Router();
 
-/* Rutas públicas para usuarios autenticados */
 router.get('/',    verifyToken, menuCtrl.getMenu);       // solo disponibles (Mesero)
 
-/* Rutas exclusivas Admin */
 router.get('/all', verifyToken, checkRole(['Admin']), menuCtrl.getAllDishes);
 router.post('/',   verifyToken, checkRole(['Admin']), menuCtrl.createDish);
 router.patch('/:id', verifyToken, checkRole(['Admin']), menuCtrl.updateDish);
