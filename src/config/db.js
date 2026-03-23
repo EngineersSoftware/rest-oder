@@ -6,7 +6,7 @@ dotenv.config();
 export const connectDB = async () => {
     try {
         const conn = await mongoose.connect(process.env.MONGO_URI);
-        console.log(`MongoDB Conetado: ${conn.connection.host}`);
+        console.log(`MongoDB conectado: ${conn.connection.host}`);
     } catch (error) {
         console.error(`Error conectando a MongoDB: ${error.message}`);
         process.exit(1);
@@ -14,9 +14,9 @@ export const connectDB = async () => {
 };
 
 mongoose.connection.on('disconnected', () => {
-    console.warn('Adevertencia: MongoDB se ha desconectado');
+    console.warn('Advertencia: MongoDB se ha desconectado');
 });
 
 mongoose.connection.on('error', (err) => {
-    console.error(`Error critico en la instancia de MongoDB: ${err}`);
+    console.error(`Error crítico en la instancia de MongoDB: ${err}`);
 });

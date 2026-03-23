@@ -229,7 +229,7 @@ Crea un archivo `.env` en la raíz del proyecto:
 
 ```env
 # Cadena de conexión a MongoDB
-MONGODB_URI=mongodb://localhost:27017/gourmetexpress
+MONGO_URI=mongodb://localhost:27017/gourmetexpress
 
 # Secreto para firmar los JWT (usa una cadena larga y aleatoria)
 JWT_SECRET=tu_secreto_super_seguro_aqui
@@ -241,24 +241,28 @@ PORT=3000
 FRONTEND_URL=*
 ```
 
-> **Atlas (nube):** Reemplaza `MONGODB_URI` con la cadena que te proporciona MongoDB Atlas, por ejemplo:
-> `mongodb+srv://usuario:password@cluster.mongodb.net/gourmetexpress`
+> **Atlas (nube):** Reemplaza `MONGO_URI` con la cadena que te proporciona MongoDB Atlas, por ejemplo:
+> `MONGO_URI=mongodb+srv://usuario:password@cluster.mongodb.net/gourmetexpress`
 
-### 4. Crear el primer usuario Admin
+### 4. Poblar la base de datos con usuarios iniciales
 
-Como el registro público no asigna el rol Admin, puedes crear el primer administrador directamente en la base de datos o usando un cliente REST (Postman, Thunder Client, etc.):
+Ejecuta el script de seed para crear los tres usuarios predeterminados (uno por rol):
 
 ```bash
-POST http://localhost:3000/api/auth/register
-Content-Type: application/json
-
-{
-  "nombre": "Administrador",
-  "email": "admin@restaurante.com",
-  "password": "Admin1234",
-  "rol": "Admin"
-}
+npm run seed
 ```
+
+Esto creará los siguientes usuarios (solo si no existen):
+
+| Rol | Email | Contraseña |
+|---|---|---|
+| Admin | admin@gourmetexpress.com | admin123 |
+| Chef | chef@gourmetexpress.com | chef123 |
+| Mesero | mesero@gourmetexpress.com | mesero123 |
+
+> El seed es **idempotente**: puedes ejecutarlo varias veces sin duplicar usuarios. Si un usuario ya existe, lo omite.
+
+> **En producción**, cambia las contraseñas desde el panel de Usuarios una vez que hayas iniciado sesión como Admin.
 
 ### 5. Ejecutar el servidor
 
@@ -280,7 +284,7 @@ Abre tu navegador en:
 http://localhost:3000
 ```
 
-Inicia sesión con las credenciales del usuario que creaste en el paso 4. Desde el panel de **Usuarios**, puedes crear cuentas con rol `Mesero` y `Chef`.
+Inicia sesión con cualquiera de las credenciales del paso 4 según el rol que quieras probar. Desde el panel de **Usuarios** (rol Admin) puedes crear, editar y eliminar cuentas.
 
 ---
 
